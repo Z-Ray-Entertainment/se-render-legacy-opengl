@@ -254,6 +254,11 @@ public class GLRenderer implements RenderBackend{
         GLCapabilities caps = GL.createCapabilities();
         
         boolean glSupported = caps.OpenGL15;
+        if(glSupported){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.INFO, new String[]{"OpenGL 1.5 supported!"}, false);
+        } else {
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"OpenGL 1.5 not supported!"}, false);
+        }
         
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
