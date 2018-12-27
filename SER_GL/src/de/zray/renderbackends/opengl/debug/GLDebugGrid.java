@@ -5,7 +5,7 @@
  */
 package de.zray.renderbackends.opengl.debug;
 
-import de.zray.se.Settings;
+import de.zray.se.EngineSettings;
 import static org.lwjgl.opengl.GL11.GL_COMPILE;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -28,8 +28,8 @@ public class GLDebugGrid {
         glColor3f(0.5f, 0.5f, 0.5f);
         
         if(gridDisplayList == -1){
-            double edge = Settings.get().debug.gridSize;
-            double step = Settings.get().debug.gridStep;
+            double edge = EngineSettings.get().debug.gridSize;
+            double step = EngineSettings.get().debug.gridStep;
             
             gridDisplayList = glGenLists(1);
             glNewList(gridDisplayList, GL_COMPILE);

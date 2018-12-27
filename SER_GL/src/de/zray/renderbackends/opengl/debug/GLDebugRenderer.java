@@ -5,7 +5,7 @@
  */
 package de.zray.renderbackends.opengl.debug;
 
-import de.zray.se.Settings;
+import de.zray.se.EngineSettings;
 import de.zray.se.world.DistancePatch;
 import de.zray.se.world.Entity;
 import de.zray.se.world.World;
@@ -24,15 +24,15 @@ public class GLDebugRenderer {
         glDisable(GL_LIGHTING);
         glDisable(GL_TEXTURE_2D);
         glCullFace(GL_FALSE);
-        if(Settings.get().debug.renderOnTop){
+        if(EngineSettings.get().debug.renderOnTop){
             glDisable(GL_DEPTH_TEST);
         }        
         glLineWidth(1);
         
-        if(Settings.get().debug.showGrid){
+        if(EngineSettings.get().debug.showGrid){
             renderGrid();
         }
-        if(Settings.get().debug.showDistancePatches){
+        if(EngineSettings.get().debug.showDistancePatches){
             renderDistancePatches(world);
         }
         for(Entity ent : world.getVisibleActors()){

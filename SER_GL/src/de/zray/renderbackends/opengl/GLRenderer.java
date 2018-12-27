@@ -6,9 +6,9 @@
 package de.zray.renderbackends.opengl;
 
 import de.zray.renderbackends.opengl.debug.GLDebugRenderer;
+import de.zray.se.EngineSettings;
 import de.zray.se.MainThread;
 import de.zray.se.world.World;
-import de.zray.se.Settings;
 import de.zray.se.graphics.Camera;
 import de.zray.se.inputmanager.KeyMap;
 import de.zray.se.logger.SELogger;
@@ -33,9 +33,9 @@ import javax.vecmath.Vector3d;
 public class GLRenderer implements RenderBackend{
     private long window = -1;
     private float aspectRatio = 1;
-    private final String windowTitle = Settings.get().title+" "+Settings.get().version;
-    private int windowW = Settings.get().window.resX;
-    private int windowH = Settings.get().window.resY;
+    private final String windowTitle = EngineSettings.get().title+" "+EngineSettings.get().version;
+    private int windowW = EngineSettings.get().window.resX;
+    private int windowH = EngineSettings.get().window.resY;
     private boolean closeRequested = false;
     private World currentWorld;
     private int keyTimes[] = new int[349], threshold = 32;
@@ -99,7 +99,7 @@ public class GLRenderer implements RenderBackend{
 
        
     @Override
-    public void renderWorld(Settings.DebugMode dMode) {
+    public void renderWorld(EngineSettings.DebugMode dMode) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         glMatrixMode(GL_MODELVIEW);
@@ -107,7 +107,7 @@ public class GLRenderer implements RenderBackend{
         applyCameraPositioning(currentWorld.getCurrentCamera());
         lightRender.renderLightSources(currentWorld);
         meshRender.renderActors(currentWorld);
-        if(dMode == Settings.DebugMode.DEBUG_AND_OBJECTS){
+        if(dMode == EngineSettings.DebugMode.DEBUG_AND_OBJECTS){
             renderDebug();
         }
         applyCamera(currentWorld.getCurrentCamera());
