@@ -239,4 +239,9 @@ public class GLRenderer implements RenderBackend{
     public boolean rayPick(Vector3d ray) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean featureTest() {
+        return true;
+    }
 }
