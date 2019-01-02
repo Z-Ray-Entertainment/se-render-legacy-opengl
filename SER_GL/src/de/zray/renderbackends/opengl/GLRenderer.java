@@ -6,9 +6,9 @@
 package de.zray.renderbackends.opengl;
 
 import de.zray.renderbackends.opengl.debug.GLDebugRenderer;
+import de.zray.se.EngineSettings;
 import de.zray.se.MainThread;
 import de.zray.se.world.World;
-import de.zray.se.Settings;
 import de.zray.se.graphics.Camera;
 import de.zray.se.inputmanager.KeyMap;
 import de.zray.se.logger.SELogger;
@@ -25,6 +25,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 import javax.vecmath.Vector3d;
+import org.lwjgl.opengl.GLCapabilities;
 
 /**
  *
@@ -33,9 +34,9 @@ import javax.vecmath.Vector3d;
 public class GLRenderer implements RenderBackend{
     private long window = -1;
     private float aspectRatio = 1;
-    private final String windowTitle = Settings.get().title+" "+Settings.get().version;
-    private int windowW = Settings.get().window.resX;
-    private int windowH = Settings.get().window.resY;
+    private final String windowTitle = EngineSettings.get().title+" "+EngineSettings.get().version;
+    private int windowW = EngineSettings.get().window.resX;
+    private int windowH = EngineSettings.get().window.resY;
     private boolean closeRequested = false;
     private World currentWorld;
     private int keyTimes[] = new int[349], threshold = 32;
@@ -99,7 +100,7 @@ public class GLRenderer implements RenderBackend{
 
        
     @Override
-    public void renderWorld(Settings.DebugMode dMode) {
+    public void renderWorld(EngineSettings.DebugMode dMode) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         glMatrixMode(GL_MODELVIEW);
@@ -107,7 +108,7 @@ public class GLRenderer implements RenderBackend{
         applyCameraPositioning(currentWorld.getCurrentCamera());
         lightRender.renderLightSources(currentWorld);
         meshRender.renderActors(currentWorld);
-        if(dMode == Settings.DebugMode.DEBUG_AND_OBJECTS){
+        if(dMode == EngineSettings.DebugMode.DEBUG_AND_OBJECTS){
             renderDebug();
         }
         applyCamera(currentWorld.getCurrentCamera());
@@ -118,7 +119,6 @@ public class GLRenderer implements RenderBackend{
 
     @Override
     public void shutdown() {
-        
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
         glfwTerminate();
@@ -201,10 +201,6 @@ public class GLRenderer implements RenderBackend{
         glfwSetWindowShouldClose(window, true);
     }
     
-    
-    
-    
-    
     private final void pollInputs(){
         for(int i = 32; i < keyTimes.length; i++){ //32 because of invalid keys < 32
             if(glfwGetKey(window, i) == 1){
@@ -238,5 +234,38 @@ public class GLRenderer implements RenderBackend{
     @Override
     public boolean rayPick(Vector3d ray) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean featureTest() {
+        GLFWErrorCallback.createPrint(System.err).set();
+        if (!glfwInit()){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Unable to initialize GLFW"}, true);
+            return false;
+        }
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        window = glfwCreateWindow(windowW, windowH, windowTitle, NULL, NULL);
+        if ( window == NULL ){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Failed to create the GLFW window"}, true);
+            return false;
+        }
+
+        glfwMakeContextCurrent(window);
+        GLCapabilities caps = GL.createCapabilities();
+        
+        boolean glSupported = caps.OpenGL15;
+        if(glSupported){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.INFO, new String[]{"OpenGL 1.5 supported!"}, false);
+        } else {
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"OpenGL 1.5 not supported!"}, false);
+        }
+        
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
+        window = -1;
+        
+        return glSupported;
     }
 }
