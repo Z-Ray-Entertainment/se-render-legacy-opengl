@@ -6,6 +6,13 @@
 package de.zray.renderbackends.opengl.debug;
 
 import de.zray.se.EngineSettings;
+import de.zray.se.graphics.semesh.Face;
+import de.zray.se.graphics.semesh.Mesh;
+import de.zray.se.graphics.semesh.MeshData;
+import de.zray.se.graphics.semesh.Normal;
+import de.zray.se.graphics.semesh.Vertex;
+import de.zray.se.storages.AssetLibrary;
+import de.zray.se.world.Actor;
 import de.zray.se.world.DistancePatch;
 import de.zray.se.world.Entity;
 import de.zray.se.world.World;
@@ -19,6 +26,7 @@ public class GLDebugRenderer {
     private GLDebugGrid gridRenderer = new GLDebugGrid();
     private GLDebugDistnacePatch dpRenderer = new GLDebugDistnacePatch();
     private GLDebugBBox bBoxRender = new GLDebugBBox();
+    private GLDebugNormal nRenderer = new GLDebugNormal();
     
     public void render(World world){
         glDisable(GL_LIGHTING);
@@ -35,9 +43,10 @@ public class GLDebugRenderer {
         if(EngineSettings.get().debug.showDistancePatches){
             renderDistancePatches(world);
         }
-        for(Entity ent : world.getVisibleActors()){
-            if(ent.getBoundingBox() != null){
-                bBoxRender.renderBoundingBox(ent.getBoundingBox());
+        for(Actor act : world.getVisibleActors()){
+            if(act.getBoundingBox() != null){
+                bBoxRender.renderBoundingBox(act.getBoundingBox());
+                //nRenderer.renderNormals(act);
             }
         }
     }
