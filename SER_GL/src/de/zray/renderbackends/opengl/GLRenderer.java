@@ -25,6 +25,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 import javax.vecmath.Vector3d;
+import org.lwjgl.opengl.GLCapabilities;
 
 /**
  *
@@ -118,7 +119,6 @@ public class GLRenderer implements RenderBackend{
 
     @Override
     public void shutdown() {
-        
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
         glfwTerminate();
@@ -201,10 +201,6 @@ public class GLRenderer implements RenderBackend{
         glfwSetWindowShouldClose(window, true);
     }
     
-    
-    
-    
-    
     private final void pollInputs(){
         for(int i = 32; i < keyTimes.length; i++){ //32 because of invalid keys < 32
             if(glfwGetKey(window, i) == 1){
@@ -242,6 +238,34 @@ public class GLRenderer implements RenderBackend{
 
     @Override
     public boolean featureTest() {
-        return true;
+        GLFWErrorCallback.createPrint(System.err).set();
+        if (!glfwInit()){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Unable to initialize GLFW"}, true);
+            return false;
+        }
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        window = glfwCreateWindow(windowW, windowH, windowTitle, NULL, NULL);
+        if ( window == NULL ){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Failed to create the GLFW window"}, true);
+            return false;
+        }
+
+        glfwMakeContextCurrent(window);
+        GLCapabilities caps = GL.createCapabilities();
+        
+        boolean glSupported = caps.OpenGL15;
+        if(glSupported){
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.INFO, new String[]{"OpenGL 1.5 supported!"}, false);
+        } else {
+            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"OpenGL 1.5 not supported!"}, false);
+        }
+        
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
+        window = -1;
+        
+        return glSupported;
     }
 }

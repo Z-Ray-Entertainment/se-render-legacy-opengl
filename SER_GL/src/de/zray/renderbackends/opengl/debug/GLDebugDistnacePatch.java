@@ -7,9 +7,6 @@ package de.zray.renderbackends.opengl.debug;
 
 import de.zray.se.EngineSettings;
 import de.zray.se.world.DistancePatch;
-import java.util.ArrayList;
-import java.util.List;
-import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.GL_COMPILE;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.glBegin;
