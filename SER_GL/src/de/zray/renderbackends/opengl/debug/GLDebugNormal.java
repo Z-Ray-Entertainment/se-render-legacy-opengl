@@ -23,7 +23,7 @@ public class GLDebugNormal {
         Vector3d pos = act.getOrientation().getPositionVec();
         Vector3d rot = act.getOrientation().getRotationVec();
         
-        for(Mesh mesh : act.getRendableSEMeshes()){
+        for(Mesh mesh : act.getRendableMeshes()){
             MeshData mData = AssetLibrary.get().getMesh(mesh.getSEMeshData());
             if(mData.getVertecies().size() == mData.getNormals().size()){
                 long verts = mData.getVertecies().size();
