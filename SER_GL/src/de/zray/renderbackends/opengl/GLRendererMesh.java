@@ -33,7 +33,7 @@ public class GLRendererMesh {
     public void renderActors(World world){
         for(Actor actor : world.getVisibleActors()){
             if(actor != null){
-                List<Mesh> rendables = actor.getRendableSEMeshes();
+                List<Mesh> rendables = actor.getRendableMeshes();
                 if(rendables != null){
                     for(int i = 0; i < rendables.size(); i++){
                         Mesh mesh = rendables.get(i);
