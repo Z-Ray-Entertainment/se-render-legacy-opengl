@@ -61,6 +61,7 @@ public class GLRenderer implements RenderBackend{
             return false;
         }
         glfwMakeContextCurrent(window);
+        GL.createCapabilities();
         
         glfwSetMouseButtonCallback(window, (window, key, action, mods) -> {
             
@@ -80,7 +81,6 @@ public class GLRenderer implements RenderBackend{
 
         glfwSwapInterval(0);
         glfwShowWindow(window);
-        GL.createCapabilities();
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         calcWindowProps(windowW, windowH);
         return true;
