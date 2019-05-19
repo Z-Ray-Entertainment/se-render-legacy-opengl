@@ -60,6 +60,7 @@ public class GLRenderer implements RenderBackend{
             SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Failed to create the GLFW window"}, true);
             return false;
         }
+        glfwMakeContextCurrent(window);
         
         glfwSetMouseButtonCallback(window, (window, key, action, mods) -> {
             
@@ -77,7 +78,6 @@ public class GLRenderer implements RenderBackend{
             glfwSetWindowPos(window, (vidmode.width() - pWidth.get(0)) / 2, (vidmode.height() - pHeight.get(0)) / 2);
         }
 
-        glfwMakeContextCurrent(window);
         glfwSwapInterval(0);
         glfwShowWindow(window);
         GL.createCapabilities();
