@@ -39,7 +39,7 @@ public class GLRenderer implements RenderBackend{
     private int windowH = EngineSettings.get().window.resY;
     private boolean closeRequested = false;
     private World currentWorld;
-    private int keyTimes[] = new int[349], threshold = 32;
+    private int keyTimes[] = new int[349], threshold = 10;
     
     private GLDebugRenderer dRenderer = new GLDebugRenderer();
     private GLRenderLight lightRender = new GLRenderLight();
