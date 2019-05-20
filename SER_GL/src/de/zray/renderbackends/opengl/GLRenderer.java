@@ -255,9 +255,9 @@ public class GLRenderer implements RenderBackend{
         
         boolean glSupported = caps.OpenGL15;
         if(glSupported){
-            SELogger.get().dispatchMsg(this, SELogger.SELogType.INFO, new String[]{"OpenGL 1.5 supported!"}, false);
+            SELogger.get().dispatchMsg(GLRenderer.class, SELogger.SELogType.INFO, new String[]{"OpenGL 1.5 supported!"}, false);
         } else {
-            SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"OpenGL 1.5 not supported!"}, false);
+            SELogger.get().dispatchMsg(GLRenderer.class, SELogger.SELogType.ERROR, new String[]{"OpenGL 1.5 not supported!"}, false);
         }
         
         glfwFreeCallbacks(window);
@@ -267,5 +267,10 @@ public class GLRenderer implements RenderBackend{
         window = -1;
         
         return glSupported;
+    }
+
+    @Override
+    public String getClassAsString() {
+        return GLRenderer.class.toString();
     }
 }
