@@ -11,7 +11,7 @@ import de.zray.se.graphics.semesh.Normal;
 import de.zray.se.graphics.semesh.Vertex;
 import de.zray.se.storages.AssetLibrary;
 import de.zray.se.world.Actor;
-import javax.vecmath.Vector3d;
+import org.joml.Vector3d;
 import static org.lwjgl.opengl.GL11.*;
 
 /**

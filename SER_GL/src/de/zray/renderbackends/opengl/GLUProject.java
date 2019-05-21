@@ -7,7 +7,7 @@ package de.zray.renderbackends.opengl;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import javax.vecmath.Vector3f;
+import org.joml.Vector3f;
 
 import org.lwjgl.BufferUtils;
 

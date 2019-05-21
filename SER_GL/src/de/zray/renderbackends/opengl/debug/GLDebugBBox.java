@@ -7,7 +7,6 @@ package de.zray.renderbackends.opengl.debug;
 
 import de.zray.se.graphics.semesh.BoundingBox;
 import de.zray.se.graphics.semesh.Orientation;
-import de.zray.se.graphics.semesh.Vertex;
 import static org.lwjgl.opengl.GL11.*;
 import static de.zray.se.graphics.semesh.BoundingBox.BOTTOM_BACK_LEFT;
 import static de.zray.se.graphics.semesh.BoundingBox.BOTTOM_BACK_RIGHT;
@@ -17,7 +16,7 @@ import static de.zray.se.graphics.semesh.BoundingBox.TOP_BACK_LEFT;
 import static de.zray.se.graphics.semesh.BoundingBox.TOP_BACK_RIGHT;
 import static de.zray.se.graphics.semesh.BoundingBox.TOP_FRONT_LEFT;
 import static de.zray.se.graphics.semesh.BoundingBox.TOP_FRONT_RIGHT;
-import javax.vecmath.Vector3d;
+import org.joml.Vector3d;
 
 
 /**

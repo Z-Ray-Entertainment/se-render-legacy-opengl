@@ -248,11 +248,11 @@ public class GLUtils {
         }
         if(mat.isShadeless()){
             glDisable(GL_LIGHTING);
-            if(mat.getTransparency() > 0){
+            if(mat.getDiffiseColor().alpha() > 0){
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_ONE, GL_SRC_COLOR);
             }
-            glColor4f(mat.getDiffiseColor().x, mat.getDiffiseColor().y, mat.getDiffiseColor().z, mat.getTransparency());
+            glColor4f(mat.getDiffiseColor().red(), mat.getDiffiseColor().green(), mat.getDiffiseColor().blue(), mat.getDiffiseColor().alpha());
         }
         else{
             if(mat.isSmooth()){
@@ -262,12 +262,12 @@ public class GLUtils {
             }
             
             glEnable(GL_LIGHTING);
-            if(mat.getTransparency() > 0){
+            if(mat.getDiffiseColor().alpha() > 0){
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_ONE, GL_SRC_COLOR);
             }
-            float[] diffuse = new float[]{mat.getDiffiseColor().x, mat.getDiffiseColor().y, mat.getDiffiseColor().z, mat.getTransparency()};
-            float[] spec = new float[]{mat.getSpecularColor().x, mat.getSpecularColor().y, mat.getSpecularColor().z, mat.getTransparency()};
+            float[] diffuse = new float[]{mat.getDiffiseColor().red(), mat.getDiffiseColor().green(), mat.getDiffiseColor().blue(), mat.getDiffiseColor().alpha()};
+            float[] spec = new float[]{mat.getSpecularColor().red(), mat.getSpecularColor().green(), mat.getSpecularColor().blue(), mat.getSpecularColor().alpha()};
 
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffuse);
             glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);

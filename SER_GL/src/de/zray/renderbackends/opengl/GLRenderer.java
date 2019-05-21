@@ -17,6 +17,7 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.system.*;
 
 import java.nio.*;
+import org.joml.Vector3d;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -24,7 +25,6 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
-import javax.vecmath.Vector3d;
 import org.lwjgl.opengl.GLCapabilities;
 
 /**
