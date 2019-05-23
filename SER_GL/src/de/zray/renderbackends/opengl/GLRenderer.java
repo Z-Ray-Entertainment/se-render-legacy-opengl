@@ -6,11 +6,9 @@
 package de.zray.renderbackends.opengl;
 
 import de.zray.renderbackends.opengl.debug.GLDebugRenderer;
-import de.zray.se.MainThread;
 import de.zray.se.world.World;
 import de.zray.se.EngineSettings;
 import de.zray.se.graphics.Camera;
-import de.zray.se.inputmanager.KeyMap;
 import de.zray.se.logger.SELogger;
 import de.zray.se.renderbackend.RenderBackend;
 import org.lwjgl.glfw.*;
@@ -39,8 +37,7 @@ public class GLRenderer implements RenderBackend{
     private int windowH = EngineSettings.get().window.resY;
     private boolean closeRequested = false;
     private World currentWorld;
-    private int keyTimes[] = new int[349], threshold = 10;
-    
+
     private GLDebugRenderer dRenderer = new GLDebugRenderer();
     private GLRenderLight lightRender = new GLRenderLight();
     private GLRendererMesh meshRender = new GLRendererMesh();
@@ -62,10 +59,6 @@ public class GLRenderer implements RenderBackend{
         }
         glfwMakeContextCurrent(window);
         GL.createCapabilities();
-        
-        glfwSetMouseButtonCallback(window, (window, key, action, mods) -> {
-            
-        });
 
         glfwSetWindowSizeCallback(window, (window, w, h) -> {
             calcWindowProps(w, h);
@@ -113,8 +106,6 @@ public class GLRenderer implements RenderBackend{
         }
         applyCamera(currentWorld.getCurrentCamera());
         glfwSwapBuffers(window);
-        glfwPollEvents();
-        pollInputs();
     }
 
     @Override
@@ -200,26 +191,6 @@ public class GLRenderer implements RenderBackend{
         closeRequested = true;
         glfwSetWindowShouldClose(window, true);
     }
-    
-    private final void pollInputs(){
-        for(int i = 32; i < keyTimes.length; i++){ //32 because of invalid keys < 32
-            if(glfwGetKey(window, i) == 1){
-                if(keyTimes[i] == 0){
-                    currentWorld.hanldeKeyInputs(i, KeyMap.MODE.TIPED);
-                }
-                else if(keyTimes[i] >= threshold){
-                    currentWorld.hanldeKeyInputs(i, KeyMap.MODE.PRESSED);
-                }
-                keyTimes[i] += MainThread.getDeltaInMs();
-            }
-            else{
-                if(keyTimes[i] > 0){
-                    currentWorld.hanldeKeyInputs(i, KeyMap.MODE.RELEASED);
-                }
-                keyTimes[i] = 0;
-            }
-        }
-    }
 
     @Override
     public void renderDebug() {
@@ -272,5 +243,10 @@ public class GLRenderer implements RenderBackend{
     @Override
     public String getClassAsString() {
         return GLRenderer.class.toString();
+    }
+
+    @Override
+    public long getWindow() {
+        return window;
     }
 }
