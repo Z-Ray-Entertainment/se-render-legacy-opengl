@@ -34,7 +34,9 @@ public class GLRenderLight {
             glEnable(GL_NORMALIZE);
             GL11.glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
             for(int i = 0; i < 8; i++){
-                renderLight(world.getAllLights().get(i), i);
+                if(world.getAllLights().size() > 0){
+                    renderLight(world.getAllLights().get(i), i);
+                }
             }
             
         } else {
