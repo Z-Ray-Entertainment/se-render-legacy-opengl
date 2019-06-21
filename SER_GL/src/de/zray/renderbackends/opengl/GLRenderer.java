@@ -32,7 +32,6 @@ import org.lwjgl.opengl.GLCapabilities;
 public class GLRenderer implements RenderBackend{
     private long window = -1;
     private float aspectRatio = 1;
-    private final String windowTitle = EngineSettings.get().title+" "+EngineSettings.get().version;
     private int windowW = EngineSettings.get().window.resX;
     private int windowH = EngineSettings.get().window.resY;
     private boolean closeRequested = false;
@@ -52,7 +51,7 @@ public class GLRenderer implements RenderBackend{
         }
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        window = glfwCreateWindow(windowW, windowH, windowTitle, NULL, NULL);
+        window = glfwCreateWindow(windowW, windowH, EngineSettings.get().windowTitle, NULL, NULL);
         if ( window == NULL ){
             SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Failed to create the GLFW window"}, true);
             return false;
@@ -215,7 +214,7 @@ public class GLRenderer implements RenderBackend{
             return false;
         }
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        window = glfwCreateWindow(windowW, windowH, windowTitle, NULL, NULL);
+        window = glfwCreateWindow(windowW, windowH, EngineSettings.get().windowTitle, NULL, NULL);
         if ( window == NULL ){
             SELogger.get().dispatchMsg(this, SELogger.SELogType.ERROR, new String[]{"Failed to create the GLFW window"}, true);
             return false;
