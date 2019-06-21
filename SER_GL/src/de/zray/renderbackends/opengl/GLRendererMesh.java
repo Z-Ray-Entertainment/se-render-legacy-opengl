@@ -10,6 +10,7 @@ import de.zray.se.graphics.semesh.MeshData;
 import de.zray.se.storages.AssetLibrary;
 import de.zray.se.world.Actor;
 import de.zray.se.world.World;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -26,14 +27,14 @@ import static org.lwjgl.opengl.GL11.glTranslated;
  * @author vortex
  */
 public class GLRendererMesh {
-    private List<OpenGLRenderData> oglRenderDatas = new LinkedList<>();
+    private ArrayList<OpenGLRenderData> oglRenderDatas = new ArrayList<>();
     private GLUtils glUtils = new GLUtils();
     private GLRenderDataCache glCache = new GLRenderDataCache();
     
     public void renderActors(World world){
         for(Actor actor : world.getVisibleActors()){
             if(actor != null){
-                List<Mesh> rendables = actor.getRendableMeshes();
+                ArrayList<Mesh> rendables = actor.getRendableMeshes();
                 if(rendables != null){
                     for(int i = 0; i < rendables.size(); i++){
                         Mesh mesh = rendables.get(i);
